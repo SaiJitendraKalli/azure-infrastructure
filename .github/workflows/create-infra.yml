@@ -1,0 +1,48 @@
+name: "Create Infrastructure With Terraform"
+
+on:
+    push:
+        branches-ignore:
+            - main
+    pull_request:
+        types: [closed]
+        branches: [main]
+    workflow_dispatch:
+
+#export ARM Credentials in shell
+
+permissions:
+    contents: read
+    id-token: write
+
+jobs:
+    terraform:
+        name: "Terraform Workflow"
+        runs-on: ubuntu-latest
+
+        steps:
+            # Checkout the repository to the GitHub Actions runner
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Terrform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_version: 1.14.1
+            - name: Azure Login action
+              uses: azure/login@v2
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+            - name: Terraform Init
+              run: terraform init --backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" --backend-config="container_name=${{ vars.AZURE_CONTAINER_NAME }}" --backend-config="key=terraform.tfstate"
+
+            # Generates an execution plan for Terraform
+            - name: Terraform Plan
+              run: terraform plan -input=false
+
+              # On push to "main", build or change infrastructure according to Terraform configuration files
+              # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+            - name: Terraform Apply
+              run: terraform apply -auto-approve -input=false
