@@ -1,4 +1,5 @@
-name: "Create Infrastructure - ${{ github.actor }} - ${{ github.event_name }} - ${{ github.ref_name }}"
+name: "Create Infrastructure"
+run-name: "Create Infra - ${{ github.actor }} - ${{ github.event_name }} - ${{ github.ref_name }}"
 
 on:
     push:
@@ -7,8 +8,6 @@ on:
         types: [closed]
         branches: [main]
     workflow_dispatch:
-
-#export ARM Credentials in shell
 
 permissions:
     contents: read
