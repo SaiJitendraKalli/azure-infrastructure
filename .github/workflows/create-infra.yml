@@ -1,9 +1,8 @@
-name: "Create Infrastructure With Terraform"
+name: "Create Infrastructure With Terraform by {{ github.actor }}"
 
 on:
     push:
-        branches-ignore:
-            - main
+
     pull_request:
         types: [closed]
         branches: [main]
@@ -32,6 +31,7 @@ jobs:
             - name: Azure Login action
               uses: azure/login@v2
               with:
+                  enable-AzPSSession: true
                   creds: ${{ secrets.AZURE_CREDENTIALS }}
 
             # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
