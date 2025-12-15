@@ -1,5 +1,5 @@
 resource "azurerm_databricks_workspace" "databricks_workspace" {
-  name                        = "${var.application_name}-dev-${var.location}"
+  name                        = "dev-${var.application_name}-${var.location}"
   location                    = var.location
   resource_group_name         = var.resource_group_name
   sku                         = "premium"
