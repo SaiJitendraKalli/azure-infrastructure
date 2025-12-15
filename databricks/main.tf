@@ -3,7 +3,7 @@ resource "azurerm_databricks_workspace" "databricks_workspace" {
   location                    = var.location
   resource_group_name         = var.resource_group_name
   sku                         = "premium"
-  managed_resource_group_name = "${var.resource_group_name}-mrg"
+  managed_resource_group_name = "${var.resource_group_name}-managed-rg"
   # public_network_access_enabled = false
   customer_managed_key_enabled = true
   custom_parameters {
