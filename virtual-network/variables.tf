@@ -7,3 +7,6 @@ variable "location" {
 variable "resource_group_name" {
   type = string
 }
+variable "shared_resource_group" {
+  type = string
+}
