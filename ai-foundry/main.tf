@@ -22,7 +22,7 @@ resource "azurerm_cognitive_deployment" "llm_model" {
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"
-    name    = "gpt-5-nano"
+    name    = "gpt-4"
     version = "1"
   }
   sku {
