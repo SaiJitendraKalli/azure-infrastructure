@@ -22,11 +22,11 @@ resource "azurerm_cognitive_deployment" "llm_model" {
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"
-    name    = "text-curie-001" # Changed from gpt-4.1-mini
+    name    = "gpt-5-nano"
     version = "1"
   }
   sku {
-    name     = "Standard"
+    name     = "GlobalStandard"
     capacity = 1
   }
 }
