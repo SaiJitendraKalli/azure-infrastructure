@@ -16,4 +16,7 @@ resource "azurerm_synapse_workspace" "synapse_workspace" {
   identity {
     type = "SystemAssigned"
   }
+  managed_virtual_network_enabled = false
+  managed_resource_group_name     = false
+  public_network_access_enabled   = true
 }

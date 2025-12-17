@@ -63,6 +63,7 @@ module "synapse" {
   resource_group_name    = module.resource_group.resource_group_name
   sql_password_secret_id = module.key_vault.sql_password_secret_id
   storage_account_id     = module.storage_account.storage_account_id
+  
   depends_on             = [module.storage_account, module.key_vault]
 
 }
