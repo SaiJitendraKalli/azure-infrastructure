@@ -8,9 +8,8 @@ resource "azurerm_synapse_workspace" "synapse_workspace" {
   resource_group_name                  = var.resource_group_name
   location                             = var.location
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.datalake_filesystem.id
-  azuread_authentication_only          = true
-  sql_administrator_login              = null
-  sql_administrator_login_password     = null
+  sql_administrator_login              = "sqladminuser"
+  sql_administrator_login_password     = var.sql_password_secret_id
   identity {
     type = "SystemAssigned"
   }
