@@ -4,4 +4,5 @@ variable application_name {
 }
 variable "location" {
   type = string
+  default = "eastus"
 }
