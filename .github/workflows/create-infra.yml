@@ -3,10 +3,6 @@ run-name: "${{ github.actor }} triggered infrastructure creation on ${{ github.r
 
 on:
   push:
-
-  pull_request:
-    types: [closed]
-    branches: [main]
   workflow_dispatch:
 
 permissions:
