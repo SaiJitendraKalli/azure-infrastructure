@@ -9,12 +9,14 @@ resource "azurerm_synapse_workspace" "synapse_workspace" {
   location                             = var.location
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.datalake_filesystem.id
   azuread_authentication_only          = true
+  sql_administrator_login              = null
+  sql_administrator_login_password     = null
   identity {
     type = "SystemAssigned"
   }
   managed_virtual_network_enabled = false
-  managed_resource_group_name   = false
-  public_network_access_enabled = true
+  managed_resource_group_name     = false
+  public_network_access_enabled   = true
 }
 
 resource "azurerm_synapse_firewall_rule" "allow_azure_services" {
