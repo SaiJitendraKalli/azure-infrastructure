@@ -4,7 +4,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "datalake_filesystem" {
 }
 
 resource "azurerm_synapse_workspace" "synapse_workspace" {
-  name                                 = "synapseworkspace${var.application_name}"
+  name                                 = "synapseworkspace-${var.application_name}"
   resource_group_name                  = var.resource_group_name
   location                             = var.location
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.datalake_filesystem.id
@@ -13,9 +13,9 @@ resource "azurerm_synapse_workspace" "synapse_workspace" {
   identity {
     type = "SystemAssigned"
   }
-  managed_virtual_network_enabled = false
-  managed_resource_group_name     = false
-  public_network_access_enabled   = true
+  # managed_virtual_network_enabled = false
+  managed_resource_group_name   = false
+  public_network_access_enabled = true
 }
 
 resource "azurerm_synapse_firewall_rule" "allow_azure_services" {
