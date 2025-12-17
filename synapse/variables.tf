@@ -9,7 +9,8 @@ variable "resource_group_name" {
 }
 
 variable "sql_password_secret_id" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "storage_account_id" {
