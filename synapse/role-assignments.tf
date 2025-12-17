@@ -1,1 +1,17 @@
 
+resource "azurerm_synapse_role_assignment" "synapse_admin" {
+  synapse_workspace_id = azurerm_synapse_workspace.synapse_workspace.id
+  role_name            = "Synapse Administrator"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+resource "azurerm_synapse_role_assignment" "synapse_contributor" {
+  synapse_workspace_id = azurerm_synapse_workspace.synapse_workspace.id
+  role_name            = "Synapse Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
+resource "azurerm_role_assignment" "user_role" {
+  scope                = azurerm_synapse_workspace.synapse_workspace.id
+  role_definition_name = "Synapse Administrator"
+  principal_id         = "5aa1aa7a-08a6-4e98-b77d-295f6900fd8f"
+}
