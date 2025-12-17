@@ -10,5 +10,6 @@ output "key_vault_id" {
 }
 
 output "sql_password_secret_id" {
-  value = azurerm_key_vault_secret.synapse_password.id
+  value     = azurerm_key_vault_secret.synapse_password.id
+  sensitive = true
 }

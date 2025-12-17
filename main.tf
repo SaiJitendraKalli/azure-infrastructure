@@ -76,3 +76,5 @@ module "open-ai-foundry" {
   key_vault_id        = module.key_vault.key_vault_id
   depends_on          = [module.storage_account, module.key_vault]
 }
+
+
