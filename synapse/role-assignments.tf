@@ -1,14 +1,7 @@
 
-resource "azurerm_synapse_role_assignment" "synapse_admin" {
-  synapse_workspace_id = azurerm_synapse_workspace.synapse_workspace.id
-  role_name            = "Synapse Administrator"
-  principal_id         = data.azurerm_client_config.current.object_id
-  depends_on           = [azurerm_synapse_firewall_rule.allow_azure_services]
-
-}
-resource "azurerm_synapse_role_assignment" "synapse_contributor" {
-  synapse_workspace_id = azurerm_synapse_workspace.synapse_workspace.id
-  role_name            = "Synapse Contributor"
+resource "azurerm_role_assignment" "synapse_contributor" {
+  scope                = azurerm_synapse_workspace.synapse_workspace.id
+  role_definition_name = "Synapse Administrator"
   principal_id         = data.azurerm_client_config.current.object_id
   depends_on           = [azurerm_synapse_firewall_rule.allow_azure_services]
 
