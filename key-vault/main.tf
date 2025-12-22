@@ -5,7 +5,7 @@ resource "azurerm_key_vault" "key_vault" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "standard"
   rbac_authorization_enabled = true
-  purge_protection_enabled   = false
+  purge_protection_enabled   = true
   soft_delete_retention_days = 7
 }
 
@@ -34,7 +34,7 @@ resource "random_password" "sql_password" {
 
 resource "azurerm_key_vault_secret" "synapse_password" {
   name         = "synapse-sql-admin-password-${var.location}"
-  value        = random_password.sql_password.result
+  value        = random_string.sql_password.result
   key_vault_id = azurerm_key_vault.key_vault.id
   depends_on   = [azurerm_key_vault.key_vault, azurerm_role_assignment.sp_role, azurerm_role_assignment.sp_role_officer]
 
