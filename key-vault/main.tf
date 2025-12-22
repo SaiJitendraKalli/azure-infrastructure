@@ -36,4 +36,6 @@ resource "azurerm_key_vault_secret" "synapse_password" {
   name         = "synapse-sql-admin-password"
   value        = random_password.sql_password.result
   key_vault_id = azurerm_key_vault.key_vault.id
+  depends_on   = [azurerm_key_vault.key_vault, azurerm_role_assignment.sp_role, azurerm_role_assignment.sp_role_officer]
+
 }
