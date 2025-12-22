@@ -62,7 +62,7 @@ module "synapse" {
   location               = var.location
   resource_group_name    = module.resource_group.resource_group_name
   storage_account_id     = module.storage_account.storage_account_id
-  sql_password_secret_id = module.key_vault.sql_password_secret_id
+  sql_password_secret_value = module.key_vault.sql_password_secret_value
   depends_on             = [module.storage_account, module.key_vault]
 
 }
