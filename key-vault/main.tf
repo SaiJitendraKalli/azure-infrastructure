@@ -5,8 +5,8 @@ resource "azurerm_key_vault" "key_vault" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "standard"
   rbac_authorization_enabled = true
-  purge_protection_enabled   = true
-  soft_delete_retention_days = 7
+  purge_protection_enabled   = false
+  soft_delete_retention_days = 1
 }
 
 resource "azurerm_key_vault_key" "managed_disk_cmk_key" {
