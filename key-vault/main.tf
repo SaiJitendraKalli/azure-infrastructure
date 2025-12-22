@@ -27,13 +27,13 @@ resource "azurerm_key_vault_key" "managed_services_cmk_key" {
   depends_on   = [azurerm_key_vault.key_vault, azurerm_role_assignment.sp_role, azurerm_role_assignment.sp_role_officer]
 }
 
-resource "random_string" "sql_password" {
+resource "random_password" "sql_password" {
   length  = 16
   special = true
 }
 
 resource "azurerm_key_vault_secret" "synapse_password" {
-  name         = "synapse-sql-admin-password-${var.location}"
-  value        = random_string.sql_password.result
+  name         = "synapse-sql-admin-password"
+  value        = random_password.sql_password.result
   key_vault_id = azurerm_key_vault.key_vault.id
 }
