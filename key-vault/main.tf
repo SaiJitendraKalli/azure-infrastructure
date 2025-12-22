@@ -6,7 +6,7 @@ resource "azurerm_key_vault" "key_vault" {
   sku_name                   = "standard"
   rbac_authorization_enabled = true
   purge_protection_enabled   = false
-  soft_delete_retention_days = 1
+  soft_delete_retention_days = 7
 }
 
 resource "azurerm_key_vault_key" "managed_disk_cmk_key" {
