@@ -34,11 +34,11 @@ resource "azurerm_cognitive_deployment" "llm_model" {
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"
-    name    = "gpt-4o-mini" # Changed from gpt-4.1
-    version = "2024-07-18"  # Updated version
+    name    = "gpt-4.1"    # Changed from gpt-4.1
+    version = "2025-04-14" # Updated version
   }
   sku {
-    name     = "GlobalStandard"
+    name     = "DataZoneStandard"
     capacity = 1
   }
 }
