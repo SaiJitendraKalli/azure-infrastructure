@@ -9,6 +9,14 @@ resource "azurerm_ai_foundry" "ai_foundry" {
   }
 }
 
+resource "azurerm_ai_services" "example" {
+  name                = "ai-services-${var.application_name}-${var.location}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku_name            = "S0"
+}
+
+
 resource "azurerm_cognitive_account" "cognitive_account" {
   name = "cog-account-${var.application_name}-${var.location}"
   fqdns = [
@@ -19,6 +27,7 @@ resource "azurerm_cognitive_account" "cognitive_account" {
   kind                = "OpenAI"
   sku_name            = "S0"
 }
+
 ## create an LLM Model for consumption and add its keys in key vault
 resource "azurerm_cognitive_deployment" "llm_model" {
   name                 = "llm-model-${var.application_name}-${var.location}"
