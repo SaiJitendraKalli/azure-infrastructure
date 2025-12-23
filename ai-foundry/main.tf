@@ -39,6 +39,6 @@ resource "azurerm_cognitive_deployment" "llm_model" {
   }
   sku {
     name     = "DataZoneStandard"
-    capacity = 1
+    capacity = 1000
   }
 }
