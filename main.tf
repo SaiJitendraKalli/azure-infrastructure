@@ -57,13 +57,13 @@ module "databricks" {
 }
 
 module "synapse" {
-  source                 = "./synapse"
-  application_name       = var.application_name
-  location               = var.location
-  resource_group_name    = module.resource_group.resource_group_name
-  storage_account_id     = module.storage_account.storage_account_id
+  source                    = "./synapse"
+  application_name          = var.application_name
+  location                  = var.location
+  resource_group_name       = module.resource_group.resource_group_name
+  storage_account_id        = module.storage_account.storage_account_id
   sql_password_secret_value = module.key_vault.sql_password_secret_value
-  depends_on             = [module.storage_account, module.key_vault]
+  depends_on                = [module.storage_account, module.key_vault]
 
 }
 
