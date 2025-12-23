@@ -19,9 +19,9 @@ resource "azurerm_ai_services" "example" {
 
 resource "azurerm_cognitive_account" "cognitive_account" {
   name = "cog-account-${var.application_name}-${var.location}"
-  # fqdns = [
-  #   "cogaccount${var.application_name}${var.location}.cognitiveservices.azure.com"
-  # ]
+  fqdns = [
+    "cogaccount${var.application_name}${var.location}.cognitiveservices.azure.com"
+  ]
   location            = var.location
   resource_group_name = var.resource_group_name
   kind                = "OpenAI"
@@ -34,8 +34,8 @@ resource "azurerm_cognitive_deployment" "llm_model" {
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"
-    name    = "gpt-4.1"
-    version = "2025-04-14"
+    name    = "gpt-35-turbo" # Changed from gpt-4.1
+    version = "0613"         # Changed version
   }
   sku {
     name     = "GlobalStandard"
