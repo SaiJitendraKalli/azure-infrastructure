@@ -21,5 +21,5 @@ resource "azurerm_ai_foundry_project" "ai_foundry_project" {
   name               = "ai-foundry-${var.application_name}-project"
   description        = "Default AI Foundry Project"
   location           = var.location
-  ai_services_hub_id = azurerm_ai_services.ai_services.id
+  ai_services_hub_id = azurerm_ai_foundry.ai_foundry.id
 }
