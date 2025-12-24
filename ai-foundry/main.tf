@@ -23,7 +23,6 @@ resource "azurerm_ai_foundry_project" "ai_foundry_project" {
   ai_services_hub_id = azurerm_ai_foundry.ai_foundry.id
 }
 
-
 resource "azurerm_cognitive_account" "cognitive_account" {
   name = "cog-account-${var.application_name}-${var.location}"
   fqdns = [
