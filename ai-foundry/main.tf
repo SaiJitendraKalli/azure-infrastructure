@@ -1,5 +1,5 @@
 resource "azurerm_ai_foundry" "ai_foundry" {
-  name                = "ai-${var.application_name}-${var.location}"
+  name                = "ai-foundry-${var.application_name}-${var.location}"
   location            = var.location
   resource_group_name = var.resource_group_name
   storage_account_id  = var.storage_account_id
@@ -9,7 +9,6 @@ resource "azurerm_ai_foundry" "ai_foundry" {
   }
 }
 
-
 resource "azurerm_ai_services" "ai_services" {
   name                = "ai-services-${var.application_name}-${var.location}"
   location            = var.location
@@ -18,8 +17,35 @@ resource "azurerm_ai_services" "ai_services" {
 }
 
 resource "azurerm_ai_foundry_project" "ai_foundry_project" {
-  name               = "ai-foundry-${var.application_name}-project"
+  name               = var.application_name
   description        = "Default AI Foundry Project"
-  location           = var.location
+  location           = azurerm_ai_foundry.ai_foundry.location
   ai_services_hub_id = azurerm_ai_foundry.ai_foundry.id
+}
+
+
+resource "azurerm_cognitive_account" "cognitive_account" {
+  name = "cog-account-${var.application_name}-${var.location}"
+  fqdns = [
+    "cogaccount${var.application_name}${var.location}.cognitiveservices.azure.com"
+  ]
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  kind                = "OpenAI"
+  sku_name            = "S0"
+}
+
+## create an LLM Model for consumption and add its keys in key vault
+resource "azurerm_cognitive_deployment" "llm_model" {
+  name                 = "llm-model-${var.application_name}-${var.location}"
+  cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
+  model {
+    format  = "OpenAI"
+    name    = "gpt-35-turbo" # Changed from gpt-4.1
+    version = "0613"         # Changed version
+  }
+  sku {
+    name     = "GlobalStandard"
+    capacity = 1
+  }
 }
