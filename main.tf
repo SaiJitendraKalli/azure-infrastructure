@@ -70,7 +70,7 @@ module "synapse" {
 module "open-ai-foundry" {
   source              = "./ai-foundry"
   application_name    = var.application_name
-  location            = var.location
+  # location            = var.location
   resource_group_name = module.resource_group.resource_group_name
   storage_account_id  = module.storage_account.storage_account_id
   key_vault_id        = module.key_vault.key_vault_id
