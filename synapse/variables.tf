@@ -8,7 +8,7 @@ variable "resource_group_name" {
   type = string
 }
 
-variable "sql_password_secret_id" {
+variable "sql_password_secret_value" {
   type      = string
   sensitive = true
 }

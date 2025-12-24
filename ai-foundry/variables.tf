@@ -2,7 +2,8 @@ variable "application_name" {
   type = string
 }
 variable "location" {
-  type = string
+  type    = string
+  default = "eastus"
 }
 variable "resource_group_name" {
   type = string
