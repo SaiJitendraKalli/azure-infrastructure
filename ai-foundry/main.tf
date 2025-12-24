@@ -35,17 +35,17 @@ resource "azurerm_cognitive_account" "cognitive_account" {
   sku_name            = "S0"
 }
 
-## create an LLM Model for consumption and add its keys in key vault
 resource "azurerm_cognitive_deployment" "llm_model" {
   name                 = "llm-model-${var.application_name}-${var.location}"
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"
-    name    = "gpt-35-turbo" # Changed from gpt-4.1
-    version = "0613"         # Changed version
+    name    = "gpt-4.1"    # Changed from gpt-4.1
+    version = "2025-04-14" # Updated version
   }
   sku {
-    name     = "GlobalStandard"
-    capacity = 1
+    name     = "DataZoneStandard"
+    capacity = 50
   }
 }
+
