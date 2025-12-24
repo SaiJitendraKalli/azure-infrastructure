@@ -21,6 +21,10 @@ resource "azurerm_ai_foundry_project" "ai_foundry_project" {
   description        = "Default AI Foundry Project"
   location           = azurerm_ai_foundry.ai_foundry.location
   ai_services_hub_id = azurerm_ai_foundry.ai_foundry.id
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azurerm_cognitive_account" "cognitive_account" {
