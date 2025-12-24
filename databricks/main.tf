@@ -1,3 +1,4 @@
+
 resource "azurerm_databricks_workspace" "databricks_workspace" {
   name                        = "${var.application_name}-${var.location}"
   location                    = var.location
