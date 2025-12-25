@@ -50,7 +50,6 @@ resource "azurerm_subnet" "databricks_private_subnet" {
     }
   }
 }
-
 resource "azurerm_network_security_group" "default_nsg" {
   name                = "nsg-${var.application_name}-${var.location}"
   location            = var.location
