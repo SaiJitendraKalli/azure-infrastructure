@@ -1,2 +1,2 @@
 application_name = "data-maester"
-location         = "centralus"
+location         = "eastus"
