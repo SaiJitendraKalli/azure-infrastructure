@@ -30,3 +30,7 @@ variable "public_subnet_network_security_group_association_id" {
 variable "private_subnet_network_security_group_association_id" {
   type = string
 }
+
+variable "key_vault_id" {
+  type = string
+}
