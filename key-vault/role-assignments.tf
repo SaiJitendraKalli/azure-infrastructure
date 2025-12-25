@@ -48,3 +48,4 @@ resource "azurerm_role_assignment" "databricks_key_vault_access" {
   role_definition_name = "Key Vault Crypto Service Encryption User"
   principal_id         = "a7f76047-d094-45fa-a507-ec0e3d7bcfda"
 }
+
