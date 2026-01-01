@@ -31,7 +31,7 @@ resource "azurerm_linux_function_app" "function_app" {
     }
     active_directory_v2 {
       client_id            = data.azurerm_client_config.current.client_id
-      tenant_auth_endpoint = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}/v2.0"
+      tenant_auth_endpoint = "https://sts.windows.net/${data.azurerm_client_config.current.tenant_id}/v2.0"
       allowed_audiences    = [for client_id in var.clients : "api://${client_id}"]
       allowed_applications = var.clients
     }
