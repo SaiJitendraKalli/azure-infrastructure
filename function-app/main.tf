@@ -33,5 +33,8 @@ resource "azurerm_linux_function_app" "function_app" {
       allowed_applications = var.clients
     }
   }
+  identity {
+    type = "SystemAssigned"
+  }
 
 }

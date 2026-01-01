@@ -6,8 +6,8 @@ resource "azurerm_storage_account" "function_storage" {
   account_replication_type = "LRS"
 }
 
-# resource "azurerm_role_assignment" "storage_blob_data_contributor" {
-#   scope                = azurerm_storage_account.function_storage.id
-#   role_definition_name = "Storage Blob Data Contributor"
-#   principal_id         = azurerm_linux_function_app.function_app.identity.principal_id
-# }
+resource "azurerm_role_assignment" "storage_blob_data_contributor" {
+  scope                = azurerm_storage_account.function_storage.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_linux_function_app.function_app.identity[0].principal_id
+}
