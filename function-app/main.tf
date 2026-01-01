@@ -16,8 +16,11 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_name          = azurerm_storage_account.function_storage.name
   storage_uses_managed_identity = true
   app_settings                  = local.app_settings
-  site_config {
 
+  site_config {
+    application_stack {
+      python_version = "3.14"
+    }
   }
   auth_settings_v2 {
     auth_enabled           = true
