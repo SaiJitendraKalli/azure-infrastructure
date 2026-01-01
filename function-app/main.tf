@@ -8,7 +8,7 @@ resource "azurerm_service_plan" "app_service_plan" {
   sku_name            = "EP1"
 }
 
-resource "azurerm_linux_web_app" "function_app" {
+resource "azurerm_linux_function_app" "function_app" {
   name                = "func-${var.application_name}-${var.location}"
   location            = var.location
   resource_group_name = var.resource_group_name
