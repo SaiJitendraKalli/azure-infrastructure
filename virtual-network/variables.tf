@@ -14,6 +14,3 @@ variable "resource_group_name" {
 variable "shared_resource_group" {
   type = string
 }
-variable "environment" {
-  type = string
-}
