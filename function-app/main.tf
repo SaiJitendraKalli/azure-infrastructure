@@ -9,11 +9,13 @@ resource "azurerm_service_plan" "app_service_plan" {
 }
 
 resource "azurerm_linux_function_app" "function_app" {
-  name                = "func-${var.application_name}-${var.location}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  service_plan_id     = azurerm_service_plan.app_service_plan.id
-  app_settings        = local.app_settings
+  name                          = "func-${var.application_name}-${var.location}"
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  service_plan_id               = azurerm_service_plan.app_service_plan.id
+  storage_account_name          = azurerm_storage_account.function_storage.name
+  storage_uses_managed_identity = true
+  app_settings                  = local.app_settings
   site_config {
 
   }
