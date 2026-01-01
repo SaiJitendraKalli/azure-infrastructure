@@ -30,7 +30,7 @@ resource "azurerm_linux_function_app" "function_app" {
       token_store_enabled = true
     }
     active_directory_v2 {
-      client_id                  = data.azurerm_client_config.current.client_id
+      client_id                  = "1baac68c-f55b-4066-9c98-e67dd5c604fa"
       tenant_auth_endpoint       = "https://sts.windows.net/${data.azurerm_client_config.current.tenant_id}/v2.0"
       allowed_audiences          = [for client_id in var.clients : "api://${client_id}"]
       allowed_applications       = var.clients
