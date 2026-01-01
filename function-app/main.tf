@@ -19,7 +19,7 @@ resource "azurerm_linux_function_app" "function_app" {
 
   site_config {
     application_stack {
-      python_version = "3.14"
+      python_version = "3.13"
     }
   }
   auth_settings_v2 {
