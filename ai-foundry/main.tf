@@ -1,5 +1,5 @@
 resource "azurerm_ai_foundry" "ai_foundry" {
-  name                = "ai-hub-${var.application_name}-${var.location}"
+  name                = "ai-hub-${var.application_name}-${var.location}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   storage_account_id  = var.storage_account_id
@@ -10,7 +10,7 @@ resource "azurerm_ai_foundry" "ai_foundry" {
 }
 
 resource "azurerm_ai_services" "ai_services" {
-  name                = "ai-services-${var.application_name}-${var.location}"
+  name                = "ai-services-${var.application_name}-${var.location}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku_name            = "S0"
@@ -28,7 +28,7 @@ resource "azurerm_ai_foundry_project" "ai_foundry_project" {
 }
 
 resource "azurerm_cognitive_account" "cognitive_account" {
-  name = "cog-account-${var.application_name}-${var.location}"
+  name = "cog-account-${var.application_name}-${var.location}-${var.environment}"
   fqdns = [
     "cogaccount${var.application_name}${var.location}.cognitiveservices.azure.com"
   ]
@@ -39,7 +39,7 @@ resource "azurerm_cognitive_account" "cognitive_account" {
 }
 
 resource "azurerm_cognitive_deployment" "llm_model" {
-  name                 = "llm-model-${var.application_name}-${var.location}"
+  name                 = "llm-model-${var.application_name}-${var.location}-${var.environment}"
   cognitive_account_id = azurerm_cognitive_account.cognitive_account.id
   model {
     format  = "OpenAI"

@@ -9,5 +9,8 @@ variable "resource_group_name" {
 }
 variable "containers" {
   type    = list(string)
-  default = ["raw", "silver", "gold", "ai-container","auto-loader"]
+  default = ["raw", "silver", "gold", "ai-container", "auto-loader"]
+}
+variable "environment" {
+  type = string
 }

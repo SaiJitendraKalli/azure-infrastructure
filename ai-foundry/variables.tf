@@ -14,3 +14,6 @@ variable "storage_account_id" {
 variable "key_vault_id" {
   type = string
 }
+variable "environment" {
+  
+}
