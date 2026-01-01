@@ -1,7 +1,7 @@
 
 
 resource "azurerm_service_plan" "app_service_plan" {
-  name                = "asp-${var.application_name}-${var.location}"
+  name                = "asp-${var.application_name}-${var.location}-${var.environment}"
   resource_group_name = var.resource_group_name
   location            = var.location
   os_type             = "Linux"
@@ -9,7 +9,7 @@ resource "azurerm_service_plan" "app_service_plan" {
 }
 
 resource "azurerm_linux_function_app" "function_app" {
-  name                          = "func-${var.application_name}-${var.location}"
+  name                          = "func-${var.application_name}-${var.location}-${var.environment}"
   location                      = var.location
   resource_group_name           = var.resource_group_name
   service_plan_id               = azurerm_service_plan.app_service_plan.id

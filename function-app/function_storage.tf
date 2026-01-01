@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "function_storage" {
-  name                     = "stdatamaefunc"
+  name                     = "stdatamaefunc${var.environment}"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"

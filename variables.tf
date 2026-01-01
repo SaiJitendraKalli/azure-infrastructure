@@ -8,5 +8,7 @@ variable "location" {
 }
 variable "clients" {
   type = list(string)
-
+}
+variable "environment" {
+  type = string
 }

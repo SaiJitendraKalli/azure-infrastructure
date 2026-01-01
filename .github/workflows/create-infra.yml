@@ -4,19 +4,33 @@ run-name: "${{ github.actor }} triggered infrastructure creation on ${{ github.r
 on:
   push:
   workflow_dispatch:
+    inputs:
+      Environment:
+        description: "Select the environment to deploy to"
+        required: true
+        type: choice
+        default: "dev"
+        options:
+          - dev
+          - test
+      Apply:
+        description: "Apply the Terraform plan after creation"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
   id-token: write
-env:
-  ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
 
 jobs:
   terraform:
     name: "Terraform Workflow"
     runs-on: ubuntu-latest
-
+    env:
+      environment: ${{ github.event.inputs.Environment || 'dev' }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
@@ -33,11 +47,38 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init --backend-config="resource_group_name=${{ vars.AZURE_RESOURCE_GROUP }}" --backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" --backend-config="container_name=${{ vars.AZURE_CONTAINER_NAME }}" --backend-config="key=terraform.tfstate" --backend-config="subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ vars.AZURE_TENANT_ID }}"
+        run: terraform init --backend-config="resource_group_name=${{ vars.AZURE_RESOURCE_GROUP }}" --backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" --backend-config="container_name=${{ vars.AZURE_CONTAINER_NAME }}" --backend-config="key=terraform${{inputs.Environment}}.tfstate" --backend-config="subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -var-file="configs.tfvars"
+        run: terraform plan -out=tfplan -var-file="${{ github.event.inputs.Environment || 'dev' }}-configs.tfvars"
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: .
+  apply:
+    name: "Terraform Apply"
+    needs: terraform
+    if: ${{ github.event.inputs.Apply == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      environment: ${{ github.event.inputs.Environment || 'dev' }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
 
+    steps:
+      - name: Download Terraform Plan Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.14.1
+      - name: Azure Login action
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan

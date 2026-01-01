@@ -4,6 +4,10 @@ variable "application_name" {
 variable "location" {
   type = string
 }
+variable "environment" {
+  type = string
+}
+
 variable "resource_group_name" {
   type = string
 }

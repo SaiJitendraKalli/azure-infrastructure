@@ -34,3 +34,6 @@ variable "private_subnet_network_security_group_association_id" {
 variable "key_vault_id" {
   type = string
 }
+variable "environment" {
+  type = string
+}
