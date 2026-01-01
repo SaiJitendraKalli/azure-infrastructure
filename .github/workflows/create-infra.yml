@@ -3,6 +3,9 @@ run-name: "${{ github.actor }} triggered infrastructure creation on ${{ github.r
 
 on:
   push:
+    paths-ignore:
+      - "*.md"
+      - "**/.github/**"
   workflow_dispatch:
     inputs:
       Environment:
