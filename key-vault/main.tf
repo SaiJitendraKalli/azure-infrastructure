@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "key_vault" {
-  name                       = "kv-data-${var.location}"
+  name                       = "kv-dat-mas-${var.location}-${var.environment}"
   location                   = var.location
   resource_group_name        = var.resource_group_name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
@@ -14,7 +14,7 @@ resource "azurerm_key_vault_key" "managed_disk_cmk_key" {
   key_vault_id = azurerm_key_vault.key_vault.id
   key_type     = "RSA"
   key_size     = 2048
-  key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+  key_opts     = ["wrapKey", "unwrapKey", "decrypt", "encrypt", "sign", "verify"]
   depends_on   = [azurerm_key_vault.key_vault, azurerm_role_assignment.sp_role, azurerm_role_assignment.sp_role_officer]
 }
 
@@ -23,7 +23,7 @@ resource "azurerm_key_vault_key" "managed_services_cmk_key" {
   key_vault_id = azurerm_key_vault.key_vault.id
   key_type     = "RSA"
   key_size     = 2048
-  key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+  key_opts     = ["wrapKey", "unwrapKey", "decrypt", "encrypt", "sign", "verify"]
   depends_on   = [azurerm_key_vault.key_vault, azurerm_role_assignment.sp_role, azurerm_role_assignment.sp_role_officer]
 }
 

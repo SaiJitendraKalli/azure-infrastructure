@@ -38,8 +38,14 @@ resource "azurerm_role_assignment" "databricks_role_officer" {
   role_definition_name = "Key Vault Secrets Officer"
   principal_id         = "a7f76047-d094-45fa-a507-ec0e3d7bcfda"
 }
+resource "azurerm_role_assignment" "databricks_crypto_user_role" {
+  scope                = azurerm_key_vault.key_vault.id
+  role_definition_name = "Key Vault Crypto User"
+  principal_id         = "a7f76047-d094-45fa-a507-ec0e3d7bcfda"
+}
 resource "azurerm_role_assignment" "databricks_key_vault_access" {
   scope                = azurerm_key_vault.key_vault.id
   role_definition_name = "Key Vault Crypto Service Encryption User"
   principal_id         = "a7f76047-d094-45fa-a507-ec0e3d7bcfda"
 }
+
