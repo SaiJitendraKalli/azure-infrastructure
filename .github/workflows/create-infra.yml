@@ -24,8 +24,8 @@ permissions:
   id-token: write
 
 jobs:
-  terraform:
-    name: "Terraform Workflow"
+  terraform-plan:
+    name: "Terraform Plan"
     runs-on: ubuntu-latest
     env:
       environment: ${{ github.event.inputs.Environment || 'dev' }}
@@ -51,15 +51,15 @@ jobs:
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -var-file="${{ github.event.inputs.Environment || 'dev' }}-configs.tfvars"
+        run: terraform plan -out=tfplan -var-file="configs/${{ github.event.inputs.Environment || 'dev' }}-configs.tfvars"
       - name: Upload Terraform Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
           path: .
-  apply:
+  terraform-apply:
     name: "Terraform Apply"
-    needs: terraform
+    needs: terraform-plan
     if: ${{ github.event.inputs.Apply == 'true' }}
     runs-on: ubuntu-latest
     env:
