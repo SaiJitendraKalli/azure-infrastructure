@@ -14,3 +14,7 @@ variable "clients" {
   type        = list(string)
   default     = []
 }
+variable "service_principal_name" {
+  type    = string
+  default = "terraform-cli"
+}
