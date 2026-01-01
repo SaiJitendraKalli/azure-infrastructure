@@ -24,8 +24,8 @@ permissions:
   id-token: write
 
 jobs:
-  terraform-plan:
-    name: "Terraform Plan"
+  terraform:
+    name: "Terraform Workflow"
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.Environment || 'dev' }}
     env:
