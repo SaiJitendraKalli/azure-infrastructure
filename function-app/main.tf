@@ -34,7 +34,7 @@ resource "azurerm_linux_function_app" "function_app" {
       tenant_auth_endpoint       = "https://sts.windows.net/${data.azurerm_client_config.current.tenant_id}/v2.0"
       allowed_audiences          = [for client_id in var.clients : "api://${client_id}"]
       allowed_applications       = var.clients
-      allowed_identities         = data.azurerm_client_config.current.tenant_id
+    #   allowed_identities         = data.azurerm_client_config.current.tenant_id
       client_secret_setting_name = "accounts-client-secret"
     }
   }
