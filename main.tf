@@ -88,12 +88,12 @@ module "open-ai-foundry" {
   depends_on          = [module.storage_account, module.key_vault]
 }
 
-module "function_app" {
-  source              = "./function-app"
-  application_name    = var.application_name
-  location            = var.location
-  environment         = var.environment
-  resource_group_name = module.resource_group.resource_group_name
-  clients             = var.clients
-}
+# module "function_app" {
+#   source              = "./function-app"
+#   application_name    = var.application_name
+#   location            = var.location
+#   environment         = var.environment
+#   resource_group_name = module.resource_group.resource_group_name
+#   clients             = var.clients
+# }
 
