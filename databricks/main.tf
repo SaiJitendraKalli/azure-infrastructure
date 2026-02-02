@@ -34,8 +34,6 @@ resource "azurerm_databricks_workspace" "databricks_workspace_serverless" {
   #   private_subnet_network_security_group_association_id = var.private_subnet_network_security_group_association_id
   # }
 
-  # Disable public network access for better security
-  public_network_access_enabled = false
 
   # Enable customer-managed keys if needed
   customer_managed_key_enabled          = true
