@@ -1,21 +1,30 @@
 name: "Destroy Infrastructure"
-run-name: "${{ github.actor }} triggered infrastructure destruction on ${{ github.ref_name }} via ${{ github.event_name }}"
+run-name: "${{ github.actor }} triggered infrastructure destruction in ${{ github.event.inputs.Environment || 'dev' }} using ${{ github.ref_name }} via ${{ github.event_name }}"
 
 on:
   workflow_dispatch:
+    inputs:
+      Environment:
+        description: "Select the environment to destroy to"
+        required: true
+        type: choice
+        default: "dev"
+        options:
+          - dev
+          - test
 
 permissions:
   contents: read
   id-token: write
-env:
-  ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
 
 jobs:
-  terraform:
+  terraform-destroy:
     name: "Terraform Workflow"
     runs-on: ubuntu-latest
-
+    environment: ${{ github.event.inputs.Environment || 'dev' }}
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
@@ -32,13 +41,7 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init --backend-config="resource_group_name=${{ vars.AZURE_RESOURCE_GROUP }}" --backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" --backend-config="container_name=${{ vars.AZURE_CONTAINER_NAME }}" --backend-config="key=terraform.tfstate" --backend-config="subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ vars.AZURE_TENANT_ID }}"
-
-      # # Generates an execution plan for Terraform
-      # - name: Terraform Plan
-      #   run: terraform plan -var-file="configs.tfvars"
-
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+        run: terraform init --backend-config="resource_group_name=${{ vars.AZURE_RESOURCE_GROUP }}" --backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" --backend-config="container_name=${{ vars.AZURE_CONTAINER_NAME }}" --backend-config="key=terraform${{github.event.inputs.Environment||'dev'}}.tfstate" --backend-config="subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" --backend-config="tenant_id=${{ vars.AZURE_TENANT_ID }}"
+      # Destroys the Terraform-managed infrastructure
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve -var-file="configs.tfvars"
+        run: terraform destroy -var-file="configs/${{ github.event.inputs.Environment || 'dev' }}-configs.tfvars" -auto-approve

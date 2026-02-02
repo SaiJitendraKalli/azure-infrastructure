@@ -1,8 +1,11 @@
 name: "Create Infrastructure"
-run-name: "${{ github.actor }} triggered infrastructure creation on ${{ github.ref_name }} via ${{ github.event_name }}"
+run-name: "${{ github.actor }} triggered infrastructure creation on ${{ github.event.inputs.Environment || 'dev' }} using ${{ github.ref_name }} via ${{ github.event_name }}"
 
 on:
   push:
+    paths-ignore:
+      - "*.md"
+      - "**/.github/**"
   workflow_dispatch:
     inputs:
       Environment:
