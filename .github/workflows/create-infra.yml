@@ -62,5 +62,5 @@ jobs:
           path: .
 
       - name: Terraform Apply
-        if: ${{ github.event.inputs.Apply == 'true' }}
+        # if: ${{ github.event.inputs.Apply == 'true' }}
         run: terraform apply -auto-approve tfplan

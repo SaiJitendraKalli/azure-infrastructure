@@ -25,14 +25,14 @@ resource "azurerm_databricks_workspace" "databricks_workspace_serverless" {
   sku                 = "premium"
 
   # Enable serverless compute
-  custom_parameters {
-    no_public_ip                                         = true
-    virtual_network_id                                   = var.vnet_id
-    private_subnet_name                                  = var.private_subnet_name
-    public_subnet_name                                   = var.public_subnet_name
-    public_subnet_network_security_group_association_id  = var.public_subnet_network_security_group_association_id
-    private_subnet_network_security_group_association_id = var.private_subnet_network_security_group_association_id
-  }
+  # custom_parameters {
+  #   no_public_ip                                         = true
+  #   virtual_network_id                                   = var.vnet_id
+  #   private_subnet_name                                  = var.private_subnet_name
+  #   public_subnet_name                                   = var.public_subnet_name
+  #   public_subnet_network_security_group_association_id  = var.public_subnet_network_security_group_association_id
+  #   private_subnet_network_security_group_association_id = var.private_subnet_network_security_group_association_id
+  # }
 
   # Disable public network access for better security
   public_network_access_enabled = false
